@@ -1,5 +1,10 @@
+import { useState } from "react";
 import DropdownComponent from "./components/DropdownComponent";
+import useCurrencies from "./hooks/useCurrencies";
 import { MdSwapVert } from "react-icons/md";
+
+const { currencies, error } = useCurrencies();
+const [amount, setAmount] = useState(1);
 
 
 function App() {
@@ -49,7 +54,11 @@ function App() {
                 Amount:
               </label>
               <input type="number"
-                className="w-full rounded-md border-gray-400 bg-[#ffffff50] shadow-sm shadow-indigo-400 p-2 text-white font-medium tracking-wider focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2" 
+                className="w-full rounded-md border-gray-400 bg-[#ffffff50] shadow-sm shadow-indigo-400 p-2 text-white font-medium tracking-wider focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2"
+                value={amount}
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                }} 
               />
             </div>
 
