@@ -5,7 +5,7 @@ import React from 'react'
 
 function DropdownComponent() {
     return (
-        <div className="max-w-xl bg-[#e0302383] p-2 border rounded-md shadow-md shadow-teal-600">
+        <div className="max-w-xl bg-[#8082ec67] p-2 border rounded-md shadow-md shadow-teal-600">
                 <h1 className="text-xl font-semibold text-white">
                     
                 </h1>
