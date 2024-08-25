@@ -7,10 +7,20 @@ import { MdSwapVert } from "react-icons/md";
 
 function App() {
 
-const { currencies, error } = useCurrencies();
-const [amount, setAmount] = useState(1);
-const [fromCurrency, setFromCurrency] = useState("USD");
-const [toCurrency, setToCurrency] = useState("NPR");
+  const { currencies, error } = useCurrencies();
+  const [amount, setAmount] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("INR");
+
+  const handleFavourite = (currency) => {
+
+
+  }
+
+  const swapCurrencies = () => {
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+  }
 
   return (
     <>
@@ -29,18 +39,31 @@ const [toCurrency, setToCurrency] = useState("NPR");
             <div className="flex flex-col gap-3">
 
               <div>
-                <DropdownComponent currencies={currencies} title="From:"/>
+                <DropdownComponent
+                  currencies={currencies}
+                  title="From:"
+                  currency={fromCurrency}
+                  handleFavourite={handleFavourite}
+                  setCurrency={setFromCurrency} />
               </div>
-             
 
-              <button className="bg-[#242424a2] rounded-full max-w-8 p-1 border-white border shadow-md shadow-red-500  flex justify-self-center mt-3 mx-auto hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">
+
+              <button
+                onClick={swapCurrencies}
+                className="bg-[#242424a2] rounded-full max-w-8 p-1 border-white border shadow-md shadow-red-500  flex justify-self-center mt-3 mx-auto hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">
 
                 <MdSwapVert className="text-2xl text-white hover:text-black " />
 
               </button>
-              
-               <div>
-                <DropdownComponent currencies={currencies} title="To:"/>
+
+              <div>
+                <DropdownComponent
+                  currencies={currencies}
+                  title="To:"
+                  currency={toCurrency}
+                  handleFavourite={handleFavourite}
+                  setCurrency={setToCurrency}
+                />
               </div>
 
             </div>
@@ -62,7 +85,7 @@ const [toCurrency, setToCurrency] = useState("NPR");
 
             <div className="flex justify-center ">
 
-              <button className="my-2 mt-10 bg-indigo-600 text- text-white font-medium tracking-wider p-2 rounded-md shadow-md  border border-gray-400 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-700 duration-300  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Convert USD to INR</button>
+              <button className="my-2 mt-10 bg-indigo-600 text- text-white font-medium tracking-wider p-2 rounded-md shadow-md  border border-gray-400 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-700 duration-300  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Convert {fromCurrency} to {toCurrency}</button>
 
             </div>
 

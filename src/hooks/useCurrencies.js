@@ -9,7 +9,7 @@ const useCurrencies = () => {
       try {
         const res = await fetch("https://api.frankfurter.app/currencies");
         const data = await res.json();
-        setCurrencies(data);
+        setCurrencies(Object.keys(data));
       } catch (error) {
         setError("Fetch API error");
       }
