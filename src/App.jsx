@@ -11,28 +11,38 @@ function App() {
   const [amount, setAmount] = useState(1);
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("INR");
-const[convertedAmount,setConvertedAmount]=useState(null);
-const [converting, setConverting] = useState(false);
+  const [convertedAmount, setConvertedAmount] = useState(null);
+  const [converting, setConverting] = useState(false);
+  const[favourites,setFavourites] =useState(JSON.parse(localStorage.getItem("favourites")) || ["INR","EUR"]);
 
-const convertCurrency = async () => {
-  if (!amount) return;
-  setConverting(true);
-  try {
-    const res = await fetch(
-      `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
-    );
-    const data = await res.json();
+  const convertCurrency = async () => {
+    if (!amount) return;
+    setConverting(true);
+    try {
+      const res = await fetch(
+        `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
+      );
+      const data = await res.json();
 
-    setConvertedAmount(data.rates[toCurrency] + " " + toCurrency);
-  } catch (error) {
-    console.error("Error Fetching", error);
-  } finally {
-    setConverting(false);
-  }
-};
+      setConvertedAmount(data.rates[toCurrency] + " " + toCurrency);
+    } catch (error) {
+      console.error("Error Fetching", error);
+    } finally {
+      setConverting(false);
+    }
+  };
 
   const handleFavourite = (currency) => {
+    let updatedFavorites = [...favourites];
 
+    if (favourites.includes(currency)) {
+      updatedFavorites = updatedFavorites.filter((fav) => fav !== currency);
+    } else {
+      updatedFavorites.push(currency);
+    }
+
+    setFavourites(updatedFavorites);
+    localStorage.setItem("favourites", JSON.stringify(updatedFavorites));
 
   }
 
@@ -59,6 +69,7 @@ const convertCurrency = async () => {
 
               <div>
                 <DropdownComponent
+                favourites={favourites}
                   currencies={currencies}
                   title="From:"
                   currency={fromCurrency}
@@ -77,6 +88,7 @@ const convertCurrency = async () => {
 
               <div>
                 <DropdownComponent
+                favourites={favourites}
                   currencies={currencies}
                   title="To:"
                   currency={toCurrency}
@@ -105,12 +117,12 @@ const convertCurrency = async () => {
             <div className="flex justify-center ">
 
               <button
-              
-              onClick={convertCurrency}
-               
-              className={`my-2 mt-10 bg-indigo-600 text- text-white font-medium tracking-wider p-2 rounded-md shadow-md  border border-gray-400 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-700 duration-300  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
-                ${converting?"animate-pulse":" "}`
-              }>Convert {fromCurrency} to {toCurrency}</button>
+
+                onClick={convertCurrency}
+
+                className={`my-2 mt-10 bg-indigo-600 text- text-white font-medium tracking-wider p-2 rounded-md shadow-md  border border-gray-400 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-700 duration-300  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                ${converting ? "animate-pulse" : " "}`
+                }>Convert {fromCurrency} to {toCurrency}</button>
 
             </div>
 
