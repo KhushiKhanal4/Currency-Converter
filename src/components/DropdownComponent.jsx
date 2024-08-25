@@ -3,15 +3,19 @@ import React from 'react'
 //  https://api.frankfurter.app/currencies
 //  https://api.frankfurter.app/latest?amount=1&from=USD&to=INR
 
-function DropdownComponent() {
-    return (
-        <div className="max-w-xl bg-[#8082ec67] p-2 border rounded-md shadow-md shadow-teal-600">
-                <h1 className="text-xl font-semibold text-white">
-                    
-                </h1>
-            </div>
-        
+const DropdownComponent=({ 
+
+    currencies,
+    currency,
+    setCurrency,
+    favourites,
+    handleFavourite,
+    title = "",
+}) => {
+    return(
+        <div>
+            <label htmlFor="{title}" className='text-white font-semibold'>{title}</label>
+        </div>
     )
 }
-
 export default DropdownComponent
