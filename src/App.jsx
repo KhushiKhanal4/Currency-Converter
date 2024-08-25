@@ -11,6 +11,25 @@ function App() {
   const [amount, setAmount] = useState(1);
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("INR");
+const[convertedAmount,setConvertedAmount]=useState(null);
+const [converting, setConverting] = useState(false);
+
+const convertCurrency = async () => {
+  if (!amount) return;
+  setConverting(true);
+  try {
+    const res = await fetch(
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
+    );
+    const data = await res.json();
+
+    setConvertedAmount(data.rates[toCurrency] + " " + toCurrency);
+  } catch (error) {
+    console.error("Error Fetching", error);
+  } finally {
+    setConverting(false);
+  }
+};
 
   const handleFavourite = (currency) => {
 
@@ -85,12 +104,18 @@ function App() {
 
             <div className="flex justify-center ">
 
-              <button className="my-2 mt-10 bg-indigo-600 text- text-white font-medium tracking-wider p-2 rounded-md shadow-md  border border-gray-400 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-700 duration-300  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Convert {fromCurrency} to {toCurrency}</button>
+              <button
+              
+              onClick={convertCurrency}
+               
+              className={`my-2 mt-10 bg-indigo-600 text- text-white font-medium tracking-wider p-2 rounded-md shadow-md  border border-gray-400 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-700 duration-300  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                ${converting?"animate-pulse":" "}`
+              }>Convert {fromCurrency} to {toCurrency}</button>
 
             </div>
 
             <div className="flex justify-center m-2 text-indigo-400 font-bold tracking-wider text-shadow-default text-md sm:text-lg">
-              Converted Amount is : 69 USD
+              Converted Amount is :{convertedAmount}
             </div>
 
           </div>
