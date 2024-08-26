@@ -18,19 +18,26 @@ function App() {
   const convertCurrency = async () => {
     if (!amount) return;
     setConverting(true);
+    const API_KEY = "d32d39ad3773eae7683fbe71"; 
+  
     try {
       const res = await fetch(
-        `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
+        `https://v6.exchangerate-api.com/v6/${API_KEY}/pair/${fromCurrency}/${toCurrency}/${amount}`
       );
       const data = await res.json();
-
-      setConvertedAmount(data.rates[toCurrency] + " " + toCurrency);
+  
+      if (data.result === "success") {
+        setConvertedAmount(data.conversion_result + " " + toCurrency);
+      } else {
+        console.error("Error Fetching", data.error);
+      }
     } catch (error) {
       console.error("Error Fetching", error);
     } finally {
       setConverting(false);
     }
   };
+  
 
   const handleFavourite = (currency) => {
     let updatedFavorites = [...favourites];
