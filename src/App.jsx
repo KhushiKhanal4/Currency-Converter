@@ -126,9 +126,11 @@ function App() {
 
             </div>
 
-            <div className="flex justify-center m-2 text-indigo-400 font-bold tracking-wider text-shadow-default text-md sm:text-lg">
+            {convertedAmount && (
+              <div className="flex justify-center m-2 text-indigo-400 font-bold tracking-wider text-shadow-default text-md sm:text-lg">
               Converted Amount is :{convertedAmount}
             </div>
+          )}
 
           </div>
 
